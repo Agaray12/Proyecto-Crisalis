@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Finnegans from "../icons/Finnegans";
 import {
   MDBBtn,
@@ -23,7 +23,6 @@ export default function SignIn() {
 
   const submitForm = async () => {
 
-
     const reqBody = {
       username: username,
       password: password,
@@ -38,7 +37,7 @@ export default function SignIn() {
       .then((response) => {
         if(response.status === 200){
           setJwt(response.data.accessToken);
-          navigate("/");
+          window.location.href="/clients";
         }
         else
           return Promise.reject("Invalid login attempt");
@@ -77,7 +76,7 @@ export default function SignIn() {
                 value={username}
                 wrapperClass="mb-4"
                 label="Username"
-                id="formControlLg"
+                id="usernameId"
                 type="text"
                 size="lg"
               />
@@ -86,7 +85,7 @@ export default function SignIn() {
                 value={password}
                 wrapperClass="mb-4"
                 label="Password"
-                id="formControlLg"
+                id="passwordId"
                 type="password"
                 size="lg"
               />
