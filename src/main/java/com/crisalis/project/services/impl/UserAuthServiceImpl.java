@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,5 +54,8 @@ public class UserAuthServiceImpl implements UserAuthService {
         return new JwtResponse(token);
     }
 
-
+    @Override
+    public Boolean validateToken(String token) {
+        return jwtUtils.validateToken(token);
+    }
 }

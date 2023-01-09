@@ -20,14 +20,16 @@ public class JwtUtils {
         String username = user.getUsername();
         Date expirationDate = new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000);
 
-        return Jwts.builder().setSubject(username).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
     }
 
     public String getUsernameFromToken(String token){
-        System.out.println(Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject());
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
-/*        String username = getClaimFromToken(token, Claims::getSubject);
-        System.out.println("username: " + username);*/
+        return getClaimFromToken(token, Claims::getSubject);
     }
 
     public Date getIssuedAtDateFromToken(String token) {
@@ -49,12 +51,14 @@ public class JwtUtils {
     
     public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
-        Boolean bool = expiration.before(new Date());
-        System.out.println(bool);
-        return bool;
+        return expiration.before(new Date());
     }
 
     public Boolean validateToken(String token) {
-        return isTokenExpired(token);
+        try{
+            return !isTokenExpired(token);
+        }catch (ExpiredJwtException e){
+            return Boolean.FALSE;
+        }
     }
 }

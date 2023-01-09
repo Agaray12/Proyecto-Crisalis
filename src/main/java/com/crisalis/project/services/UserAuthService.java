@@ -15,4 +15,6 @@ public interface UserAuthService {
 
     public JwtResponse loginUser(UserLoginRequest userRequest);
 
+    public Boolean validateToken(String token);
+
 }
