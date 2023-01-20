@@ -4,6 +4,7 @@ import { tokens } from "../../../theme";
 import Header from "../../global/Header";
 import UserActions from "./userActions";
 import { useLocalState } from "../../../util/useLocalStorage";
+import Fab from "@mui/material/Fab";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,6 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { companyColumns, personColumns } from "./columns";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Navigate } from "react-router-dom";
 
 const Clients = () => {
   const theme = useTheme();
@@ -20,6 +23,7 @@ const Clients = () => {
 
   const handleChange = (event) => {
     setClientType(event.target.value);
+
     handleClients(event.target.value);
   };
 
@@ -27,59 +31,58 @@ const Clients = () => {
 
   const [jwt, setJwt] = useLocalState("", "jwt");
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [isValid, setIsValid] = useState(null);
+
   const handleClients = (value) => {
-     axios
-      .get(
-        "api/client/get-all",
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-          params: {
-            clientType: `${value}`
-          },
+    axios
+      .get("api/client/get-all", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
         },
-      )
+        params: {
+          clientType: `${value}`,
+        },
+      })
       .then((res) => {
         if (res.status === 200) {
           setClients(res.data);
-        } else return Promise.reject("Invalid");
+        };
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          window.location.href="/login";
+        }
       });
-  }
+  };
 
   return (
     <Box m="20px">
-      <Box mb="30px">
-        <Typography
-          variant="h2"
-          color={colors.grey[100]}
-          fontWeight="bold"
-          sx={{ m: "0 0 5px 0" }}
-        >
-          CLIENTES
-        </Typography>
-        <FormControl sx={{ m: 1, minWidth: 100 }}>
-          <InputLabel focused={false}>Clientes</InputLabel>
-          <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={clientType}
-            onChange={handleChange}
-            autoWidth
-            label="Clientes"
-            variant="outlined"
-          >
-            <MenuItem value={"Empresas"}>Empresas</MenuItem>
-            <MenuItem value={"Personas"}>Personas Físicas</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Box mb="30px">
+          <FormControl sx={{ m: 1, minWidth: 100 }}>
+            <InputLabel focused={false}>Clientes</InputLabel>
+            <Select
+              labelId="demo-simple-select-autowidth-label"
+              id="demo-simple-select-autowidth"
+              value={clientType}
+              onChange={handleChange}
+              autoWidth
+              label="Clientes"
+              variant="outlined"
+            >
+              <MenuItem value={"Empresas"}>Empresas</MenuItem>
+              <MenuItem value={"Personas"}>Personas Físicas</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Fab onClick={()=>{window.location.href="/clients/create"}}>
+          <AddCircleIcon/>
+        </Fab>
+      </div>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="70vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -110,24 +113,26 @@ const Clients = () => {
         }}
       >
         {clientType === "Empresas" ? (
-          <DataGrid
-            key={clients.map((client) => client.id)}
-            pageSize={10}
-            disableColumnMenu
-            disableColumnSelector
-            disableDensitySelector
-            rows={clients}
-            columns={companyColumns}
-            components={{ Toolbar: GridToolbar }}
-            componentsProps={{
-              toolbar: {
-                csvOptions: { disableToolbarButton: true },
-                printOptions: { disableToolbarButton: true },
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 250 },
-              },
-            }}
-          />
+          <>
+            <DataGrid
+              key={clients.map((client) => client.id)}
+              pageSize={10}
+              disableColumnMenu
+              disableColumnSelector
+              disableDensitySelector
+              rows={clients}
+              columns={companyColumns}
+              components={{ Toolbar: GridToolbar }}
+              componentsProps={{
+                toolbar: {
+                  csvOptions: { disableToolbarButton: true },
+                  printOptions: { disableToolbarButton: true },
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 250 },
+                },
+              }}
+            />
+          </>
         ) : clientType === "Personas" ? (
           <DataGrid
             key={clients.map((client) => client.id)}

@@ -62,8 +62,12 @@ export const personColumns = [
     }
 ];
 
-const productColums = [
+export const productColumns = [
 
+  {
+    field: "goodType",
+    headerName: "Tipo de bien",
+  },
   {
     field: "name",
     headerName: "Nombre",
@@ -86,12 +90,8 @@ const productColums = [
     flex: 0.5,
   },
   {
-      field: "goodType",
-      headerName: "Tipo de bien",
-  },
-  {
     field: "userActions",
-    headerName: "Actions",
+    headerName: "Acciones",
     type: "actions",
     renderCell: (values) => (
       <UserActions  {...values}/>
