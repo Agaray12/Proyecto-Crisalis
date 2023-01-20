@@ -1,13 +1,15 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../global/Header";
+import Fab from "@mui/material/Fab";
 import { useTheme } from "@mui/material";
 import UserActions from '../Clients/userActions';
 import { useLocalState } from "../../../util/useLocalStorage";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { productColumns } from "../Clients/columns";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const Goods = () => {
   const theme = useTheme();
@@ -36,49 +38,21 @@ const Goods = () => {
     }, [jwt]);
    
 
-  const columns = [
-
-    {
-      field: "name",
-      headerName: "Nombre",
-      flex: 0.5,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "description",
-      headerName: "Descripción",
-      headerAlign: "left",
-      align: "left",
-      flex: 1,
-    },
-    {
-      field: "price",
-      headerName: "Precio",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      flex: 0.5,
-    },
-    {
-        field: "goodType",
-        headerName: "Tipo de bien",
-    },
-    {
-      field: "userActions",
-      headerName: "Actions",
-      type: "actions",
-      renderCell: (values) => (
-        <UserActions  {...values}/>
-      ),
-    }
-  ];
-
   return (
     <Box m="20px">
-      <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
-      />
+      <Box mb="30px">
+      <Typography
+        variant="h2"
+        color={colors.grey[100]}
+        fontWeight="bold"
+        sx={{ m: "0 0 5px 0" }}
+      >
+        BIENES
+      </Typography>
+      </Box>
+      <Fab onClick={()=>{window.location.href="/goods/create"}}>
+          <AddCircleIcon/>
+        </Fab>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -119,7 +93,7 @@ const Goods = () => {
           disableColumnSelector
           disableDensitySelector
           rows={goods}
-          columns={columns}
+          columns={productColumns}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{
             toolbar: {
