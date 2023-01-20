@@ -40,10 +40,10 @@ export default function SignIn() {
           window.location.href="/clients";
         }
         else
-          return Promise.reject("Invalid login attempt");
+          return Promise.reject();
         })
         .catch((message) => {
-        alert(message);
+          alert("Invalid login attempt");
       });
   };
 
