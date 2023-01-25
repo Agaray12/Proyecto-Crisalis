@@ -11,6 +11,7 @@ import java.util.Date;
 public class ClientResponse {
     private Integer id;
     private Boolean hasActiveService;
+    private String clientType;
 
     private String cuit;
     private String companyName;

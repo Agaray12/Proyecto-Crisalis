@@ -10,9 +10,6 @@ import java.util.Date;
 @Data
 public class Company extends Client{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String cuit;
     private String companyName;
     private Date startOfActivities;

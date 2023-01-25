@@ -9,9 +9,6 @@ import javax.persistence.*;
 @Data
 public class Person extends Client{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private Long dni;
     private String firstName;
     private String lastName;

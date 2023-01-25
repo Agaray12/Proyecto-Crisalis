@@ -14,7 +14,7 @@ public class JwtUtils {
     @Value("${app.jwt-secret}")
     private String jwtSecret;
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60;
+    public static final long JWT_TOKEN_VALIDITY = 30 * 60 * 60 * 24 ;
 
     public String generateToken(AppUser user) {
         String username = user.getUsername();

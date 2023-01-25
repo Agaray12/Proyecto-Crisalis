@@ -50,4 +50,24 @@ public class GoodMapper {
         response.setIsSpecial(service.getIsSpecial());
         return response;
     }
+
+    public AppService goodResponseToServiceEntity(GoodResponse goodResponse) {
+        AppService service = new AppService();
+        service.setId(goodResponse.getId());
+        service.setName(goodResponse.getName());
+        service.setDescription(goodResponse.getDescription());
+        service.setPrice(goodResponse.getPrice());
+        service.setIsSpecial(goodResponse.getIsSpecial());
+        return service;
+    }
+
+    public Product goodResponseToProductEntity(GoodResponse goodResponse) {
+        Product product = new Product();
+        product.setName(goodResponse.getName());
+        product.setDescription(goodResponse.getDescription());
+        product.setPrice(goodResponse.getPrice());
+        product.setHasWarranty(goodResponse.getHasWarranty());
+        product.setWarrantyYears(goodResponse.getWarrantyYears());
+        return product;
+    }
 }

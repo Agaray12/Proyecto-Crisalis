@@ -8,8 +8,6 @@ import javax.persistence.*;
 @DiscriminatorValue("Service")
 @Data
 public class AppService extends Good{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
     private Boolean isSpecial;
 }

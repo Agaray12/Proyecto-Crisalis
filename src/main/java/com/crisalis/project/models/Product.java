@@ -9,9 +9,7 @@ import javax.persistence.*;
 @DiscriminatorValue("Product")
 @Data
 public class Product extends Good{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
     private Boolean hasWarranty;
     @Column(nullable = true)
     private Integer warrantyYears;
