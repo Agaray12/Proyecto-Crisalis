@@ -27,7 +27,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(request));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<?> updateOrder (@RequestBody OrderUpdateRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrder(request));
     }

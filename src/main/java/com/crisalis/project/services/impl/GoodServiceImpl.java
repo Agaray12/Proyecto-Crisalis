@@ -4,7 +4,6 @@ import com.crisalis.project.mappers.GoodMapper;
 import com.crisalis.project.models.AppService;
 import com.crisalis.project.models.Product;
 import com.crisalis.project.models.dto.request.good.GoodRequest;
-import com.crisalis.project.models.dto.response.client.ClientResponse;
 import com.crisalis.project.models.dto.response.good.GoodResponse;
 import com.crisalis.project.repositories.ProductRepository;
 import com.crisalis.project.repositories.ServiceRepository;
@@ -12,7 +11,6 @@ import com.crisalis.project.services.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +45,7 @@ public class GoodServiceImpl implements GoodService {
         return null;
     }
 
+    @Override
     public List<GoodResponse> getAll(){
         List<GoodResponse> services = serviceRepo.findAll().stream().map(goodMapper::serviceEntityToResponse).collect(Collectors.toList());
         List<GoodResponse> products = productRepo.findAll().stream().map(goodMapper::productEntityToResponse).collect(Collectors.toList());
@@ -57,13 +56,17 @@ public class GoodServiceImpl implements GoodService {
         }};
     }
 
+    @Override
     public Optional<AppService> findServiceById(Integer id){
         return serviceRepo.findById(id);
     }
+
+    @Override
     public Optional<Product> findProductById(Integer id){
        return productRepo.findById(id);
     }
 
+    @Override
     public GoodResponse updateGood(Integer id, GoodRequest goodRequest) {
         Optional<AppService> serviceOpt = findServiceById(id);
         if(serviceOpt.isPresent()){

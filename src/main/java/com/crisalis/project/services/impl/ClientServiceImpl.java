@@ -4,14 +4,12 @@ import com.crisalis.project.mappers.ClientMapper;
 import com.crisalis.project.models.*;
 import com.crisalis.project.models.dto.request.client.ClientRequest;
 import com.crisalis.project.models.dto.response.client.ClientResponse;
-import com.crisalis.project.models.dto.response.good.GoodResponse;
 import com.crisalis.project.repositories.CompanyRepository;
 import com.crisalis.project.repositories.PersonRepository;
 import com.crisalis.project.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

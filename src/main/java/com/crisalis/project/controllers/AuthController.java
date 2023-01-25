@@ -1,17 +1,14 @@
 package com.crisalis.project.controllers;
 
-import com.crisalis.project.enums.Role;
 import com.crisalis.project.models.AppUser;
 import com.crisalis.project.models.dto.request.user.UserLoginRequest;
 import com.crisalis.project.models.dto.request.user.UserRegisterRequest;
 import com.crisalis.project.services.impl.UserAuthServiceImpl;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController

@@ -1,28 +1,24 @@
 package com.crisalis.project.services.impl;
 
-import com.crisalis.project.mappers.GoodMapper;
 import com.crisalis.project.mappers.OrderMapper;
 import com.crisalis.project.models.*;
 import com.crisalis.project.models.dto.request.order.OrderDetailRequest;
 import com.crisalis.project.models.dto.request.order.OrderRequest;
 import com.crisalis.project.models.dto.request.order.OrderSaveRequest;
 import com.crisalis.project.models.dto.request.order.OrderUpdateRequest;
-import com.crisalis.project.models.dto.response.good.GoodResponse;
 import com.crisalis.project.models.dto.response.order.OrderDetailResponse;
 import com.crisalis.project.models.dto.response.order.OrderResponse;
 import com.crisalis.project.repositories.OrderDetailRepository;
 import com.crisalis.project.repositories.OrderRepository;
-import org.hibernate.ObjectNotFoundException;
-import org.hibernate.criterion.Order;
+import com.crisalis.project.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl {
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
@@ -39,18 +35,22 @@ public class OrderServiceImpl {
     @Autowired
     private OrderDetailRepository orderDetailRepo;
 
+    @Override
     public List<AppOrder> getAll(){
         return orderRepo.findAll();
     }
 
+    @Override
     public OrderDetail findOrderDetailById (Integer id){
         return orderDetailRepo.findById(id).orElse(null);
     }
 
+    @Override
     public AppOrder findOrderById(Integer id){
         return orderRepo.findById(id).orElse(null);
     }
 
+    @Override
     public Double calculateTaxes(List<Tax> taxes, Double totalPrice){
         Double basePrice = totalPrice;
         for (Tax tax:
@@ -60,7 +60,7 @@ public class OrderServiceImpl {
         return totalPrice;
     }
 
-
+    @Override
     public OrderDetailResponse createOrderDetail(OrderDetailRequest orderDetailRequest){
 
         AppOrder order = findOrderById(orderDetailRequest.getOrderId());
@@ -101,6 +101,7 @@ public class OrderServiceImpl {
         return null;
     }
 
+    @Override
     public OrderResponse createOrder(OrderRequest request) {
 
         if(request.getCompanyId() == null){
@@ -131,6 +132,7 @@ public class OrderServiceImpl {
         return null;
     }
 
+    @Override
     public OrderResponse updateOrder(OrderUpdateRequest request) {
         OrderDetail orderDetail = findOrderDetailById(request.getOrderDetailId());
         AppOrder order = findOrderById(request.getOrderId());
@@ -152,6 +154,7 @@ public class OrderServiceImpl {
         return orderMapper.orderEntityToResponse(orderRepo.save(order));
     }
 
+    @Override
     public OrderResponse saveOrder(OrderSaveRequest request) {
         AppOrder order = findOrderById(request.getOrderId());
         order.setStatus("REALIZADO");
