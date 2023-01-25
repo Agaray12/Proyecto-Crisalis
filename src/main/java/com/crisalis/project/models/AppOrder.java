@@ -47,4 +47,7 @@ public class AppOrder {
             cascade = CascadeType.ALL)
     @Nullable
     private List<OrderDetail> orderDetails;
+
+    private Double totalPrice = (double) 0;
+    private Double totalPriceAfterTaxes = (double) 0;
 }

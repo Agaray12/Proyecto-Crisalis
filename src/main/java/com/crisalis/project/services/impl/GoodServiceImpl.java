@@ -30,6 +30,9 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     private GoodMapper goodMapper;
 
+    @Autowired
+    private TaxServiceImpl taxService;
+
     @Override
     public GoodResponse createGood(GoodRequest goodRequest){
         if(goodRequest.getGoodType().equalsIgnoreCase("service")){
@@ -59,5 +62,32 @@ public class GoodServiceImpl implements GoodService {
     }
     public Optional<Product> findProductById(Integer id){
        return productRepo.findById(id);
+    }
+
+    public GoodResponse updateGood(Integer id, GoodRequest goodRequest) {
+        Optional<AppService> serviceOpt = findServiceById(id);
+        if(serviceOpt.isPresent()){
+            AppService service = serviceOpt.get();
+            service.setName(goodRequest.getName());
+            service.setDescription(goodRequest.getDescription());
+            service.setIsSpecial(goodRequest.getIsSpecial());
+            service.setPrice(goodRequest.getPrice());
+            service.setTaxes(taxService.getTaxesByName(goodRequest.getTaxNames()));
+            goodMapper.serviceEntityToResponse(serviceRepo.save(service));
+        }
+
+        Optional<Product> productOpt = findProductById(id);
+        if(productOpt.isPresent()){
+            Product product = productOpt.get();
+            product.setName(goodRequest.getName());
+            product.setDescription(goodRequest.getDescription());
+            product.setPrice(goodRequest.getPrice());
+            product.setTaxes(taxService.getTaxesByName(goodRequest.getTaxNames()));
+            product.setHasWarranty(goodRequest.getHasWarranty());
+            product.setWarrantyYears(goodRequest.getWarrantyYears());
+            goodMapper.productEntityToResponse(productRepo.save(product));
+        }
+
+        return null;
     }
 }

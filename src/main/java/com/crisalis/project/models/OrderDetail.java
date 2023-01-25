@@ -28,10 +28,11 @@ public class OrderDetail {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private AppService service;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private AppOrder order;
     private Integer quantity;
     private Double price;
     private Double totalPrice;
+    private Double priceAfterTaxes;
 }

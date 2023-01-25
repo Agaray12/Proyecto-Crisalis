@@ -19,6 +19,11 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(goodService.createGood(goodRequest));
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateGood(@PathVariable Integer id, @RequestBody GoodRequest goodRequest){
+        return ResponseEntity.status(HttpStatus.OK).body(goodService.updateGood(id, goodRequest));
+    }
+
     @GetMapping("/get-all")
     public ResponseEntity<?> getAllGoods(){
         return ResponseEntity.status(HttpStatus.OK).body(goodService.getAll());

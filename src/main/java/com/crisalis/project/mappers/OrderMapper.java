@@ -6,10 +6,15 @@ import com.crisalis.project.models.dto.response.order.OrderDetailResponse;
 import com.crisalis.project.models.dto.response.order.OrderResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class OrderMapper {
 
-    public OrderDetail orderDetailRequestToEntity(OrderDetailRequest orderDetailRequest, AppOrder order, AppService service, Product product, Double price){
+    public OrderDetail orderDetailRequestToEntity(OrderDetailRequest orderDetailRequest,
+                                                  AppOrder order, AppService service,
+                                                  Product product,
+                                                  Double price){
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setService(service);
         orderDetail.setProduct(product);
@@ -28,6 +33,7 @@ public class OrderMapper {
         response.setQuantity(orderDetailEntity.getQuantity());
         response.setPrice(orderDetailEntity.getPrice());
         response.setTotalPrice(orderDetailEntity.getTotalPrice());
+        response.setPriceAfterTaxes(orderDetailEntity.getPriceAfterTaxes());
         return response;
     }
 
@@ -45,6 +51,8 @@ public class OrderMapper {
         response.setPerson(orderEntity.getPerson());
         response.setStatus(orderEntity.getStatus());
         response.setOrderDetails(orderEntity.getOrderDetails());
+        response.setTotalPrice(orderEntity.getTotalPrice());
+        response.setTotalPriceAfterTaxes(orderEntity.getTotalPriceAfterTaxes());
         return response;
     }
 }

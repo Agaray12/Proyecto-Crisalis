@@ -3,6 +3,7 @@ package com.crisalis.project.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -16,4 +17,6 @@ public class Good {
     private String name;
     private String description;
     private Double price;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Tax> taxes;
 }

@@ -13,8 +13,10 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderResponse {
 
+    private String status;
     private Company company;
     private Person person;
-    private String status;
     private List<OrderDetail> orderDetails;
+    private Double totalPrice;
+    private Double totalPriceAfterTaxes;
 }

@@ -39,10 +39,32 @@ public class OrderServiceImpl {
     @Autowired
     private OrderDetailRepository orderDetailRepo;
 
+    public List<AppOrder> getAll(){
+        return orderRepo.findAll();
+    }
+
+    public OrderDetail findOrderDetailById (Integer id){
+        return orderDetailRepo.findById(id).orElse(null);
+    }
+
+    public AppOrder findOrderById(Integer id){
+        return orderRepo.findById(id).orElse(null);
+    }
+
+    public Double calculateTaxes(List<Tax> taxes, Double totalPrice){
+        Double basePrice = totalPrice;
+        for (Tax tax:
+             taxes) {
+            totalPrice += basePrice * ((tax.getPercentage() / 100));
+        }
+        return totalPrice;
+    }
+
+
     public OrderDetailResponse createOrderDetail(OrderDetailRequest orderDetailRequest){
 
         AppOrder order = findOrderById(orderDetailRequest.getOrderId());
-        if(order == null){
+        if(order == null || order.getStatus().equals("REALIZADO")){
             return null;
         }
 
@@ -55,6 +77,8 @@ public class OrderServiceImpl {
                     service,
                     null,
                     service.getPrice());
+            Double priceAfterTaxes = calculateTaxes(service.getTaxes(), orderDetail.getTotalPrice());
+            orderDetail.setPriceAfterTaxes(priceAfterTaxes);
             OrderDetail orderDetailEntity = orderDetailRepo.save(orderDetail);
             return  orderMapper.orderDetailEntityToResponse(orderDetailEntity);
         }
@@ -68,29 +92,14 @@ public class OrderServiceImpl {
                     null,
                     product,
                     product.getPrice());
+            Double priceAfterTaxes = calculateTaxes(product.getTaxes(), orderDetail.getTotalPrice());
+            orderDetail.setPriceAfterTaxes(priceAfterTaxes);
             OrderDetail orderDetailEntity = orderDetailRepo.save(orderDetail);
             return  orderMapper.orderDetailEntityToResponse(orderDetailEntity);
         }
 
         return null;
     }
-
-    public OrderDetail findOrderDetailById (Integer id){
-        return orderDetailRepo.findById(id).orElse(null);
-    }
-
-    public AppOrder findOrderById(Integer id){
-        return orderRepo.findById(id).orElse(null);
-    }
-
- /*   private List<OrderDetail> findOrderDetailListById(List<Integer> orderItemsId){
-        List<OrderDetail> orderDetails = new ArrayList<>();
-        for (Integer orderItemId:
-             orderItemsId) {
-            orderDetails.add(findOrderDetailById(orderItemId));
-        }
-        return orderDetails;
-    }*/
 
     public OrderResponse createOrder(OrderRequest request) {
 
@@ -126,12 +135,18 @@ public class OrderServiceImpl {
         OrderDetail orderDetail = findOrderDetailById(request.getOrderDetailId());
         AppOrder order = findOrderById(request.getOrderId());
 
-        if(orderDetail == null || order == null){
+        if(orderDetail == null || order == null || order.getStatus().equals("REALIZADO")){
             return null;
         }
 
         List<OrderDetail> orderDetailList = order.getOrderDetails();
         orderDetailList.add(orderDetail);
+
+        Double totalPrice = order.getTotalPrice() + orderDetail.getTotalPrice();
+        Double totalPriceAfterTaxes = order.getTotalPriceAfterTaxes() + orderDetail.getPriceAfterTaxes();
+
+        order.setTotalPrice(totalPrice);
+        order.setTotalPriceAfterTaxes(totalPriceAfterTaxes);
 
         order.setOrderDetails(orderDetailList);
         return orderMapper.orderEntityToResponse(orderRepo.save(order));
