@@ -4,7 +4,6 @@ import com.crisalis.project.mappers.OrderMapper;
 import com.crisalis.project.models.*;
 import com.crisalis.project.models.dto.request.order.OrderDetailRequest;
 import com.crisalis.project.models.dto.request.order.OrderRequest;
-import com.crisalis.project.models.dto.request.order.OrderSaveRequest;
 import com.crisalis.project.models.dto.request.order.OrderUpdateRequest;
 import com.crisalis.project.models.dto.response.order.OrderDetailResponse;
 import com.crisalis.project.models.dto.response.order.OrderResponse;
@@ -155,8 +154,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse saveOrder(OrderSaveRequest request) {
-        AppOrder order = findOrderById(request.getOrderId());
+    public OrderResponse saveOrder(Integer id) {
+        AppOrder order = findOrderById(id);
         order.setStatus("REALIZADO");
         return orderMapper.orderEntityToResponse(orderRepo.save(order));
     }

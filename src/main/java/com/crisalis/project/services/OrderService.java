@@ -5,7 +5,6 @@ import com.crisalis.project.models.OrderDetail;
 import com.crisalis.project.models.Tax;
 import com.crisalis.project.models.dto.request.order.OrderDetailRequest;
 import com.crisalis.project.models.dto.request.order.OrderRequest;
-import com.crisalis.project.models.dto.request.order.OrderSaveRequest;
 import com.crisalis.project.models.dto.request.order.OrderUpdateRequest;
 import com.crisalis.project.models.dto.response.order.OrderDetailResponse;
 import com.crisalis.project.models.dto.response.order.OrderResponse;
@@ -28,5 +27,5 @@ public interface OrderService {
 
     public OrderResponse updateOrder(OrderUpdateRequest request);
 
-    public OrderResponse saveOrder(OrderSaveRequest request);
+    public OrderResponse saveOrder(Integer id);
 }

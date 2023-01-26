@@ -2,7 +2,6 @@ package com.crisalis.project.controllers;
 
 import com.crisalis.project.models.dto.request.order.OrderDetailRequest;
 import com.crisalis.project.models.dto.request.order.OrderRequest;
-import com.crisalis.project.models.dto.request.order.OrderSaveRequest;
 import com.crisalis.project.models.dto.request.order.OrderUpdateRequest;
 import com.crisalis.project.services.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,9 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.updateOrder(request));
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<?> saveOrder(@RequestBody OrderSaveRequest request){
-        return ResponseEntity.status(HttpStatus.OK).body(orderService.saveOrder(request));
+    @PostMapping("/save/{id}")
+    public ResponseEntity<?> saveOrder(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.saveOrder(id));
     }
 
     @GetMapping("/get-all")
