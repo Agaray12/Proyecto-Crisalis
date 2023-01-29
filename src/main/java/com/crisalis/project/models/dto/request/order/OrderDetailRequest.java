@@ -10,5 +10,6 @@ public class OrderDetailRequest {
     private Integer orderId;
     private Integer goodId;
     private Integer quantity;
-
+    private Boolean hasWarranty;
+    private Integer warrantyYears;
 }

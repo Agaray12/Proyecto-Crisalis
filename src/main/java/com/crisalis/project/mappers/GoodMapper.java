@@ -15,6 +15,7 @@ public class GoodMapper {
          service.setDescription(goodRequest.getDescription());
          service.setPrice(goodRequest.getPrice());
          service.setIsSpecial(goodRequest.getIsSpecial());
+         service.setSpecialExtraPercentage(goodRequest.getSpecialExtraPercentage());
         return service;
     }
 

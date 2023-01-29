@@ -22,11 +22,14 @@ public class AppOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String status;
+    private Boolean hasDiscount;
+    private String clientType;
 
     @ManyToOne(
             fetch = FetchType.EAGER
     )
     @JoinColumn(name = "company_id")
+    @Nullable
     private Company company;
 
     @ManyToOne(
@@ -47,4 +50,5 @@ public class AppOrder {
 
     private Double totalPrice = (double) 0;
     private Double totalPriceAfterTaxes = (double) 0;
+    private Double finalPrice = (double) 0;
 }

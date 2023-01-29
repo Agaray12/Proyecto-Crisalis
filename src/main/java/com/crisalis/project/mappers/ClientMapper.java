@@ -22,6 +22,8 @@ public class ClientMapper {
         ClientResponse response = new ClientResponse();
         response.setId(company.getId());
         response.setHasActiveService(company.getHasActiveService());
+        response.setProducts(company.getProducts());
+        response.setServices(company.getServices());
         response.setCompanyName(company.getCompanyName());
         response.setCuit(company.getCuit());
         response.setStartOfActivities(company.getStartOfActivities());
@@ -41,6 +43,8 @@ public class ClientMapper {
         ClientResponse response = new ClientResponse();
         response.setId(person.getId());
         response.setHasActiveService(person.getHasActiveService());
+        response.setProducts(person.getProducts());
+        response.setServices(person.getServices());
         response.setDni(person.getDni());
         response.setFirstName(person.getFirstName());
         response.setLastName(person.getLastName());

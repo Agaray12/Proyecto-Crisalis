@@ -32,7 +32,9 @@ public class OrderDetail {
     @JsonIgnore
     private AppOrder order;
     private Integer quantity;
-    private Double price;
-    private Double totalPrice;
-    private Double priceAfterTaxes;
+    private Double price = (double) 0;
+    private Double totalPrice = (double) 0;
+    private Double priceAfterTaxes = (double) 0;
+    private Double extraCost = (double) 0;
+    private Double finalItemPrice = (double) 0;
 }

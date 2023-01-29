@@ -12,6 +12,7 @@ public class GoodRequest {
     private List<String> taxNames;
     private String goodType;
     private Boolean isSpecial;
+    private Double specialExtraPercentage;
     private Boolean hasWarranty;
     private Integer warrantyYears;
 }

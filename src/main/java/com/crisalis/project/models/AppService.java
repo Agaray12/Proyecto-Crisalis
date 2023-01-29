@@ -10,4 +10,5 @@ import javax.persistence.*;
 public class AppService extends Good{
 
     private Boolean isSpecial;
+    private Double specialExtraPercentage;
 }

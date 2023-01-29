@@ -81,4 +81,12 @@ public class ClientServiceImpl implements ClientService {
             addAll(people);
         }};
     }
+
+    public void updatePerson(Person person) {
+        personRepo.save(person);
+    }
+
+    public void updateCompany(Company company) {
+        companyRepo.save(company);
+    }
 }

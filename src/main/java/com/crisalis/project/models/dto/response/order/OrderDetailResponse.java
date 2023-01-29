@@ -17,4 +17,6 @@ public class OrderDetailResponse {
     private Double price;
     private Double totalPrice;
     private Double priceAfterTaxes;
+    private Double finalItemPrice;
+    private Double extraCost;
 }

@@ -33,25 +33,35 @@ public class OrderMapper {
         response.setPrice(orderDetailEntity.getPrice());
         response.setTotalPrice(orderDetailEntity.getTotalPrice());
         response.setPriceAfterTaxes(orderDetailEntity.getPriceAfterTaxes());
+        response.setExtraCost(orderDetailEntity.getExtraCost());
+        response.setFinalItemPrice(orderDetailEntity.getFinalItemPrice());
         return response;
     }
 
-    public AppOrder orderRequestToEntity(Person person, Company company) {
+    public AppOrder orderRequestToEntity(Person person, Company company, String clientType) {
         AppOrder order = new AppOrder();
         order.setStatus("PENDIENTE");
         order.setPerson(person);
+        order.setClientType(clientType);
         order.setCompany(company);
         return order;
     }
 
     public OrderResponse orderEntityToResponse(AppOrder orderEntity) {
         OrderResponse response = new OrderResponse();
-        response.setCompany(orderEntity.getCompany());
-        response.setPerson(orderEntity.getPerson());
+        if(orderEntity.getClientType().equalsIgnoreCase("company")){
+            response.setCompanyName(orderEntity.getCompany().getCompanyName());
+        }else{
+            response.setCompanyName(null);
+        }
+        response.setPersonName(orderEntity.getPerson().getFirstName()
+                                .concat(" ")
+                                .concat(orderEntity.getPerson().getLastName()));
         response.setStatus(orderEntity.getStatus());
         response.setOrderDetails(orderEntity.getOrderDetails());
         response.setTotalPrice(orderEntity.getTotalPrice());
         response.setTotalPriceAfterTaxes(orderEntity.getTotalPriceAfterTaxes());
+        response.setFinalPrice(orderEntity.getFinalPrice());
         return response;
     }
 }

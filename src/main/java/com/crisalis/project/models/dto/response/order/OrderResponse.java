@@ -14,9 +14,10 @@ import java.util.List;
 public class OrderResponse {
 
     private String status;
-    private Company company;
-    private Person person;
+    private String companyName;
+    private String personName;
     private List<OrderDetail> orderDetails;
     private Double totalPrice;
     private Double totalPriceAfterTaxes;
+    private Double finalPrice;
 }

@@ -76,7 +76,7 @@ public class GoodServiceImpl implements GoodService {
             service.setIsSpecial(goodRequest.getIsSpecial());
             service.setPrice(goodRequest.getPrice());
             service.setTaxes(taxService.getTaxesByName(goodRequest.getTaxNames()));
-            goodMapper.serviceEntityToResponse(serviceRepo.save(service));
+            return goodMapper.serviceEntityToResponse(serviceRepo.save(service));
         }
 
         Optional<Product> productOpt = findProductById(id);
@@ -88,7 +88,7 @@ public class GoodServiceImpl implements GoodService {
             product.setTaxes(taxService.getTaxesByName(goodRequest.getTaxNames()));
             product.setHasWarranty(goodRequest.getHasWarranty());
             product.setWarrantyYears(goodRequest.getWarrantyYears());
-            goodMapper.productEntityToResponse(productRepo.save(product));
+            return goodMapper.productEntityToResponse(productRepo.save(product));
         }
 
         return null;
