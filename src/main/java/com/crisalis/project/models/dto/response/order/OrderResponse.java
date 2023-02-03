@@ -13,7 +13,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderResponse {
 
+    private Integer id;
     private String status;
+    private String clientType;
     private String companyName;
     private String personName;
     private List<OrderDetail> orderDetails;

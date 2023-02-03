@@ -38,6 +38,11 @@ public class OrderController {
 
     @GetMapping("/get-all")
     public ResponseEntity<?> getAllOrders(){
-        return ResponseEntity.status(HttpStatus.FOUND).body(orderService.getAll());
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.getAll());
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getOne(@PathVariable Integer orderId){
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.findOrderById(orderId));
     }
 }

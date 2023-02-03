@@ -6,7 +6,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("Product")
+@DiscriminatorValue("Producto")
 @Data
 public class Product extends Good{
 

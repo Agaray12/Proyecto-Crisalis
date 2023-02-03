@@ -7,22 +7,39 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { addMinutes, format } from "date-fns";
+import { addDays, addHours, addMinutes, addSeconds, format, parseISO } from "date-fns";
 import axios from 'axios';
 import { useLocalState } from "../../../../util/useLocalStorage";
 
-function ClientCreate() {
+function ClientEdit() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [jwt, setJwt] = useLocalState("", "jwt");
 
-  const [clientType, setClientType] = useState("");
-  const [cuit, setCuit] = useState(null);
-  const [companyName, setCompanyName] = useState(null);
-  const [startOfActivities, setStartOfActivities] = useState(null);
-  const [dni, setDni] = useState(null);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
+  const clientId = window.location.href.split("/client/")[1];
+  const [client, setClient] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("api/client", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+        params: {
+          clientId: `${clientId}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setClient(res.data);
+        };
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          window.location.href="/login";
+        }
+      });
+  }, [])
 
 
   const handleDateFormat = (event) => {
@@ -76,18 +93,18 @@ function ClientCreate() {
           <Select
             labelId="demo-simple-select-autowidth-label"
             id="demo-simple-select-autowidth"
-            value={clientType}
+            value={client.clientType}
             onChange={handleChange}
             autoWidth
             label="Clientes"
             variant="outlined"
           >
-            <MenuItem value={"Empresa"}>Empresa</MenuItem>
-            <MenuItem value={"Persona"}>Persona Física</MenuItem>
+            <MenuItem value={"Company"}>Empresa</MenuItem>
+            <MenuItem value={"Person"}>Persona Física</MenuItem>
           </Select>
         </FormControl>
       </Box>
-      {clientType === "Empresa" ? (
+      {clientType === "Company" ? (
         <>
           <Box
             display="grid"
@@ -104,7 +121,7 @@ function ClientCreate() {
               type="text"
               label="Company Name"
               color="info"
-              name="firstName"
+              name="companyName"
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
@@ -114,7 +131,7 @@ function ClientCreate() {
               type="text"
               label="CUIT"
               color="info"
-              name="lastName"
+              name="cuit"
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
@@ -139,7 +156,7 @@ function ClientCreate() {
             </Button>
           </Box>
         </>
-      ) : clientType === "Persona" ? (
+      ) : clientType === "Person" ? (
         <>
           <Box
             display="grid"
@@ -193,4 +210,4 @@ function ClientCreate() {
   );
 }
 
-export default ClientCreate;
+export default ClientEdit;

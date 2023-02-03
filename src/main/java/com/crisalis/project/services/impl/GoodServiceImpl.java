@@ -33,11 +33,11 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public GoodResponse createGood(GoodRequest goodRequest){
-        if(goodRequest.getGoodType().equalsIgnoreCase("service")){
+        if(goodRequest.getGoodType().equalsIgnoreCase("servicio")){
             AppService service = goodMapper.goodRequestToService(goodRequest);
             AppService serviceSaved = serviceRepo.save(service);
             return goodMapper.serviceEntityToResponse(serviceSaved);
-        }else if(goodRequest.getGoodType().equalsIgnoreCase("product")) {
+        }else if(goodRequest.getGoodType().equalsIgnoreCase("producto")) {
             Product product = productRepo.save(goodMapper.goodRequestToProduct(goodRequest));
             return goodMapper.productEntityToResponse(product);
         }

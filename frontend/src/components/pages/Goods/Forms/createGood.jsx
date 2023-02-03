@@ -69,12 +69,12 @@ function GoodCreate() {
             label="Bienes"
             variant="outlined"
           >
-            <MenuItem value={"Product"}>Producto</MenuItem>
-            <MenuItem value={"Service"}>Servicio</MenuItem>
+            <MenuItem value={"Producto"}>Producto</MenuItem>
+            <MenuItem value={"Servicio"}>Servicio</MenuItem>
           </Select>
         </FormControl>
       </Box>
-      {goodType === "Product" ? (
+      {goodType === "Producto" ? (
         <>
           <Box
             display="grid"
@@ -126,7 +126,7 @@ function GoodCreate() {
             </Button>
           </Box>
         </>
-      ) : goodType === "Service" ? (
+      ) : goodType === "Servicio" ? (
         <>
           <Box
             display="grid"

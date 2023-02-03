@@ -22,6 +22,8 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String goodType;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Product product;
 
@@ -32,6 +34,7 @@ public class OrderDetail {
     @JsonIgnore
     private AppOrder order;
     private Integer quantity;
+    private Boolean hasWarranty;
     private Double price = (double) 0;
     private Double totalPrice = (double) 0;
     private Double priceAfterTaxes = (double) 0;

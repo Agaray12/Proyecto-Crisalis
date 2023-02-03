@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react';
+import './App.css';
 import SignIn from './components/pages/SignIn';
 import Dashboard from './components/pages/Dashboard';
 import Clients from './components/pages/Clients/index';
@@ -14,6 +15,9 @@ import { useLocalState } from './util/useLocalStorage';
 import axios from 'axios';
 import ClientCreate from './components/pages/Clients/Forms/createClient';
 import GoodCreate from './components/pages/Goods/Forms/createGood';
+import Orders from './components/pages/Orders/index';
+import CreateOrder from './components/pages/Orders/Forms/createOrder';
+import CreateOrderItems from './components/pages/Orders/Forms/createOrderItems';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -91,6 +95,31 @@ function App() {
                     <GoodCreate />
                   </PrivateRoute>
                 }/>
+              </Route>
+              <Route
+                path='/orders'
+              >
+                <Route index
+                element={
+                  <PrivateRoute>
+                    <Orders />
+                  </PrivateRoute>
+                }/>
+                <Route 
+                path='new'
+                element={
+                  <PrivateRoute>
+                    <CreateOrder />
+                  </PrivateRoute>
+                }/>
+                <Route 
+                path=':id'
+                element= {
+                  <PrivateRoute>
+                    <CreateOrderItems />
+                  </PrivateRoute>
+                }
+                />
               </Route>
             </Routes>
           </main>

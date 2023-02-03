@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("Service")
+@DiscriminatorValue("Servicio")
 @Data
 public class AppService extends Good{
 

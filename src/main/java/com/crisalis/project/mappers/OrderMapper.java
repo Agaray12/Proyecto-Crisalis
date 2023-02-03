@@ -49,7 +49,9 @@ public class OrderMapper {
 
     public OrderResponse orderEntityToResponse(AppOrder orderEntity) {
         OrderResponse response = new OrderResponse();
-        if(orderEntity.getClientType().equalsIgnoreCase("company")){
+        response.setId(orderEntity.getId());
+        response.setClientType(orderEntity.getClientType());
+        if(orderEntity.getClientType().equalsIgnoreCase("empresa")){
             response.setCompanyName(orderEntity.getCompany().getCompanyName());
         }else{
             response.setCompanyName(null);

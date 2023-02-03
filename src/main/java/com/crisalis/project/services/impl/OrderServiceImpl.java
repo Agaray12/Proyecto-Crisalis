@@ -10,13 +10,13 @@ import com.crisalis.project.models.dto.response.order.OrderResponse;
 import com.crisalis.project.repositories.OrderDetailRepository;
 import com.crisalis.project.repositories.OrderRepository;
 import com.crisalis.project.services.OrderService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -37,8 +37,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailRepository orderDetailRepo;
 
     @Override
-    public List<AppOrder> getAll() {
-        return orderRepo.findAll();
+    public List<OrderResponse> getAll() {
+        return orderRepo.findAll().stream().map(orderMapper::orderEntityToResponse).collect(Collectors.toList());
     }
 
     @Override
@@ -71,6 +71,7 @@ public class OrderServiceImpl implements OrderService {
                         service,
                         null,
                         service.getPrice());
+        orderDetail.setGoodType("Servicio");
 
         //Calcula el los impuestos sobre el precio base
         Double priceAfterTaxes = calculateTaxes(service.getTaxes(), orderDetail.getTotalPrice());
@@ -96,10 +97,12 @@ public class OrderServiceImpl implements OrderService {
                         null,
                         product,
                         product.getPrice());
+        orderDetail.setGoodType("Producto");
 
         //Si tiene garantía, agrega un costo extra del 2% por cada año de garantía
         if(orderDetailRequest.getHasWarranty()){
             Double extraCost = orderDetail.getTotalPrice() * ((double) orderDetailRequest.getWarrantyYears() * (0.02));
+            orderDetail.setHasWarranty(true);
             orderDetail.setExtraCost(extraCost);
         }
 
@@ -150,7 +153,7 @@ public class OrderServiceImpl implements OrderService {
             Optional<Person> personOpt = clientService.findPersonById(request.getPersonId());
             if (personOpt.isPresent()) {
                 Person person = personOpt.get();
-                AppOrder order = orderMapper.orderRequestToEntity(person, null, "Person");
+                AppOrder order = orderMapper.orderRequestToEntity(person, null, "Persona");
                 order.setHasDiscount(person.getHasActiveService());
                 AppOrder orderEntity = orderRepo.save(order);
                 return orderMapper.orderEntityToResponse(orderEntity);
@@ -159,14 +162,12 @@ public class OrderServiceImpl implements OrderService {
         }
 
         Optional<Company> companyOpt = clientService.findCompanyById(request.getCompanyId());
-
         if (companyOpt.isPresent()) {
             Optional<Person> personOpt = clientService.findPersonById(request.getPersonId());
             if (personOpt.isPresent()) {
                 Company company = companyOpt.get();
                 Person person = personOpt.get();
-
-                AppOrder order = orderMapper.orderRequestToEntity(person, company, "Company");
+                AppOrder order = orderMapper.orderRequestToEntity(person, company, "Empresa");
                 order.setHasDiscount(company.getHasActiveService());
                 AppOrder orderEntity = orderRepo.save(order);
                 return orderMapper.orderEntityToResponse(orderEntity);
@@ -213,7 +214,7 @@ public class OrderServiceImpl implements OrderService {
             products.add(orderDetail.getProduct());
         });
 
-        if (clientType.equalsIgnoreCase("person")) {
+        if (clientType.equalsIgnoreCase("persona")) {
             person.setServices(services);
             person.setProducts(products);
             if (!person.getServices().isEmpty()) {
@@ -221,7 +222,7 @@ public class OrderServiceImpl implements OrderService {
             }
             clientService.updatePerson(person);
         }
-        if (clientType.equalsIgnoreCase("company")) {
+        if (clientType.equalsIgnoreCase("empresa")) {
             company.setServices(services);
             company.setProducts(products);
             if(!company.getServices().isEmpty()){

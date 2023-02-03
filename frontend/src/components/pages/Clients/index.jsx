@@ -71,8 +71,8 @@ const Clients = () => {
               label="Clientes"
               variant="outlined"
             >
-              <MenuItem value={"Empresas"}>Empresas</MenuItem>
-              <MenuItem value={"Personas"}>Personas Físicas</MenuItem>
+              <MenuItem value={"Empresa"}>Empresas</MenuItem>
+              <MenuItem value={"Persona"}>Personas Físicas</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -112,7 +112,7 @@ const Clients = () => {
           },
         }}
       >
-        {clientType === "Empresas" ? (
+        {clientType === "Empresa" ? (
           <>
             <DataGrid
               key={clients.map((client) => client.id)}
@@ -133,7 +133,7 @@ const Clients = () => {
               }}
             />
           </>
-        ) : clientType === "Personas" ? (
+        ) : clientType === "Persona" ? (
           <DataGrid
             key={clients.map((client) => client.id)}
             pageSize={10}

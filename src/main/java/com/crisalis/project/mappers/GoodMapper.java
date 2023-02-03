@@ -35,7 +35,8 @@ public class GoodMapper {
         response.setName(product.getName());
         response.setDescription(product.getDescription());
         response.setPrice(product.getPrice());
-        response.setGoodType("Product");
+        response.setGoodType("Producto");
+        response.setType("good");
         response.setHasWarranty(product.getHasWarranty());
         response.setWarrantyYears(product.getWarrantyYears());
         return response;
@@ -47,7 +48,8 @@ public class GoodMapper {
         response.setName(service.getName());
         response.setDescription(service.getDescription());
         response.setPrice(service.getPrice());
-        response.setGoodType("Service");
+        response.setGoodType("Servicio");
+        response.setType("good");
         response.setIsSpecial(service.getIsSpecial());
         return response;
     }

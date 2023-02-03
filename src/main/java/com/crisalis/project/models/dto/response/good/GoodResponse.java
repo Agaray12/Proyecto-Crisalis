@@ -14,6 +14,7 @@ public class GoodResponse {
     private String description;
     private Double price;
     private List<Tax> taxes;
+    private String type;
     private String goodType;
     private Boolean isSpecial;
     private Boolean hasWarranty;

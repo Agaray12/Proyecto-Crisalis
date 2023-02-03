@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    public List<AppOrder> getAll();
+    public List<OrderResponse> getAll();
 
     public OrderDetail findOrderDetailById (Integer id);
 

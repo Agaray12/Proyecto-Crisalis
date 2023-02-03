@@ -18,14 +18,15 @@ public class ClientResponse {
     private List<AppService> services;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Product> products;
+    private String type;
     private String clientType;
-
     private String cuit;
     private String companyName;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date startOfActivities;
 
     private Long dni;
+    private String fullName;
     private String firstName;
     private String lastName;
 }

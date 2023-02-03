@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("Person")
+@DiscriminatorValue("Persona")
 @Data
 public class Person extends Client{
 

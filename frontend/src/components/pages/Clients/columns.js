@@ -33,6 +33,7 @@ export const companyColumns = [
   ];
 
 export const personColumns = [
+    { field: "hasActiveService", headerName: "Servicio activo" },
     {
       field: "dni",
       headerName: "DNI",
@@ -53,7 +54,7 @@ export const personColumns = [
     },
     {
       field: "userActions",
-      headerName: "Actions",
+      headerName: "Acciones",
       type: "actions",
       flex: 1,
       renderCell: (values) => (
@@ -62,7 +63,7 @@ export const personColumns = [
     }
 ];
 
-export const productColumns = [
+export const goodColumns = [
 
   {
     field: "goodType",
@@ -93,6 +94,42 @@ export const productColumns = [
     field: "userActions",
     headerName: "Acciones",
     type: "actions",
+    flex: 1,
+    renderCell: (values) => (
+      <UserActions  {...values}/>
+    ),
+  }
+];
+
+export const orderColumns = [
+  {
+    field: "status",
+    headerName: "Estado",
+  },
+  {
+    field: "clientType",
+    headerName: "Tipo de cliente"
+  },
+  {
+    field: "companyName",
+    headerName: "Nombre",
+    flex: 0.5,
+  },
+  {
+    field: "personName",
+    headerName: "Nombre",
+    flex: 0.5,
+  },
+  {
+    field: "finalPrice",
+    headerName: "Precio final",
+    flex: 0.5,
+  },
+  {
+    field: "userActions",
+    headerName: "Acciones",
+    type: "actions",
+    flex: 0.5,
     renderCell: (values) => (
       <UserActions  {...values}/>
     ),

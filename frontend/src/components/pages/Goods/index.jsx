@@ -1,14 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import Header from "../../global/Header";
 import Fab from "@mui/material/Fab";
 import { useTheme } from "@mui/material";
-import UserActions from '../Clients/userActions';
 import { useLocalState } from "../../../util/useLocalStorage";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { productColumns } from "../Clients/columns";
+import { goodColumns } from "../Clients/columns";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const Goods = () => {
@@ -27,7 +25,8 @@ const Goods = () => {
         })
         .then((res) => {
             if(res.status === 200){
-                setGoods(res.data)
+                setGoods(res.data);
+                console.log(goods);
             }
             else
                 return Promise.reject("Invalid");
@@ -35,7 +34,7 @@ const Goods = () => {
         .catch((err) => {
             console.log(err);
         })
-    }, [jwt]);
+    }, []);
    
 
   return (
@@ -89,11 +88,12 @@ const Goods = () => {
         <DataGrid
           key={goods.map((good) => good.id)}
           pageSize={10}
+          rowsPerPageOptions={[10]}
           disableColumnMenu
           disableColumnSelector
           disableDensitySelector
           rows={goods}
-          columns={productColumns}
+          columns={goodColumns}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{
             toolbar: {

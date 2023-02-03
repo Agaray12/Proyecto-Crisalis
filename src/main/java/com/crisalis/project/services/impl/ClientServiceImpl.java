@@ -28,11 +28,11 @@ public class ClientServiceImpl implements ClientService {
     private PersonRepository personRepo;
 
     public ClientResponse createClient(ClientRequest clientRequest){
-        if(clientRequest.getClientType().equalsIgnoreCase("company")){
+        if(clientRequest.getClientType().equalsIgnoreCase("empresa")){
             Company company = clientMapper.clientRequestToCompany(clientRequest);
             Company companySaved = companyRepo.save(company);
             return clientMapper.companyEntityToResponse(companySaved);
-        }else if(clientRequest.getClientType().equalsIgnoreCase("person")) {
+        }else if(clientRequest.getClientType().equalsIgnoreCase("persona")) {
             Person person = personRepo.save(clientMapper.clientRequestToPerson(clientRequest));
             return clientMapper.personEntityToResponse(person);
         }
@@ -61,9 +61,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     public List<ClientResponse> getAllByType(String type){
-        if(type.equalsIgnoreCase("empresas")){
+        if(type.equalsIgnoreCase("empresa")){
             return companyRepo.findAll().stream().map(clientMapper::companyEntityToResponse).collect(Collectors.toList());
-        }else if (type.equalsIgnoreCase("personas")){
+        }else if (type.equalsIgnoreCase("persona")){
             return personRepo.findAll().stream().map(clientMapper::personEntityToResponse).collect(Collectors.toList());
         }else{
             return null;
